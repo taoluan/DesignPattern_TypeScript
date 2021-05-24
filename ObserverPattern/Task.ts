@@ -1,11 +1,13 @@
-import { EmailNotifier, PhoneNotifier, ZaloNotifier, ITask, Notifier} from './ListNotifier'
-class Task {
+import { EmailNotifier, PhoneNotifier, ZaloNotifier, ITask} from './ListNotifier'
+import { Subject } from './base/Subject'
+class Task extends Subject {
     private _name: string;
     private _description: string;
     private _author: string;
     private _status: boolean;
 
     constructor(name: string, description: string, author: string) {
+        super();
         this._name = name;
         this._description = description;
         this._author = author;
@@ -28,13 +30,14 @@ class Task {
     }
 
     private NotifyPullRequeste(): void {
-        const data = this.getInformationTask();
-        const EmailNotify = new EmailNotifier();
-        const PhoneNotify = new PhoneNotifier();
-        const ZaloNotify = new ZaloNotifier();
-        EmailNotify.Notify(data);
-        PhoneNotify.Notify(data);
-        ZaloNotify.Notify(data);
+        // const data = this.getInformationTask();
+        // const EmailNotify = new EmailNotifier();
+        // const PhoneNotify = new PhoneNotifier();
+        // const ZaloNotify = new ZaloNotifier();
+        // EmailNotify.Notify(data);
+        // PhoneNotify.Notify(data);
+        // ZaloNotify.Notify(data);
+        this.notifyObserver(this)
     }
 
 }

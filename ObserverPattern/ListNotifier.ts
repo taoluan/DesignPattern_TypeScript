@@ -1,29 +1,53 @@
-class EmailNotifier implements Notifier {
-    public Notify(task:ITask): void {
+import { IObserver } from "./base/IObserver";
+import { Subject } from "./base/Subject";
+import { Task } from "./Task";
+
+class EmailNotifier extends IObserver {
+
+    constructor(_subject: Subject) {
+        super();
+        this.subject = _subject;
+        this.subject.AttachObserver(this)
+    }
+    
+    public Notify(task: Task): void {
         console.log(
             `
             Thông báo được gửi từ Email: 
-                ${task.author} đã hoàn thành task: ${task.name} - Tính năng:  ${task.description}
+                ${task.getInformationTask().author} đã hoàn thành task: ${task.getInformationTask().name} - Tính năng:  ${task.getInformationTask().description}
             `
         )
     }
 }
-class PhoneNotifier implements Notifier {
-    public Notify(task:ITask): void {
+class PhoneNotifier extends IObserver {
+
+    constructor(_subject: Subject) {
+        super();
+        this.subject = _subject;
+        this.subject.AttachObserver(this)
+    }
+    public Notify(task: Task): void {
         console.log(
             `
             Thông báo được gửi từ Phone: 
-                ${task.author} đã hoàn thành task: ${task.name} - Tính năng:  ${task.description}
+                ${task.getInformationTask().author} đã hoàn thành task: ${task.getInformationTask().name} - Tính năng:  ${task.getInformationTask().description}
             `
         )
     }
 }
-class ZaloNotifier implements Notifier {
-    public Notify(task:ITask): void {
+class ZaloNotifier extends IObserver {
+
+    constructor(_subject: Subject) {
+        super();
+        this.subject = _subject;
+        this.subject.AttachObserver(this)
+        
+    }
+    public Notify(task: Task): void {
         console.log(
             `
             Thông báo được gửi từ Zalo: 
-                ${task.author} đã hoàn thành task: ${task.name} - Tính năng:  ${task.description}
+                ${task.getInformationTask().author} đã hoàn thành task: ${task.getInformationTask().name} - Tính năng:  ${task.getInformationTask().description}
             `
         )
     }
@@ -33,7 +57,7 @@ interface ITask {
     description: string;
     author: string;
 }
-interface Notifier {
-    Notify(task:ITask);
-}
-export {EmailNotifier, PhoneNotifier, ZaloNotifier, ITask, Notifier};
+// interface Notifier {
+//     Notify(task:ITask);
+// }
+export {EmailNotifier, PhoneNotifier, ZaloNotifier, ITask};
